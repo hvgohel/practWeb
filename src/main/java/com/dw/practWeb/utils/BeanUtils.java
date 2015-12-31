@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.dw.practWeb.repository.StudentRepository;
+import com.dw.practWeb.service.StudentService;
 
 @Named
 public class BeanUtils
@@ -12,6 +13,9 @@ public class BeanUtils
 
     @Inject
     private StudentRepository studentRepository;
+    
+    @Inject
+    private StudentService studentService;
 
     public BeanUtils()
     {
@@ -26,5 +30,10 @@ public class BeanUtils
     public StudentRepository getStudentRepository()
     {
         return studentRepository;
+    }
+    
+    public StudentService getStudentService()
+    {
+        return studentService;
     }
 }
