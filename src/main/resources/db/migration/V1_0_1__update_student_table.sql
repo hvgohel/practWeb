@@ -1,0 +1,4 @@
+ALTER TABLE `student` 
+CHANGE COLUMN `name` `name` TEXT NULL DEFAULT NULL ,
+ADD COLUMN `city` VARCHAR(45) NULL AFTER `name`,
+ADD COLUMN `dateOfBirth` DATE NULL AFTER `city`;

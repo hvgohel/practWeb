@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="TRACE" monitorInterval="10">
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %X{userID} %X{sessionID} %logger{36} - %msg%n" />
+        </Console>
+    </appenders>
+
+    <loggers>
+        <root level="WARN">
+            <appender-ref ref="Console" />
+        </root>
+
+        <logger name="org.springframework" level="DEBUG" />
+    
+        <logger name="org.hibernate" level="ERROR" />
+        <logger name="org.hibernate.type" level="ERROR" />
+
+        <logger name="com.dw.practWeb" level="DEBUG" />
+
+    </loggers>
+</configuration>
