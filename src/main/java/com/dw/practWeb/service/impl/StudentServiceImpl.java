@@ -20,6 +20,7 @@ import com.dw.practWeb.service.StudentService;
 import com.dw.practWeb.utils.BeanMapper;
 
 import rx.Observable;
+import rx.Observable.OnSubscribe;
 import rx.plugins.RxJavaPlugins;
 import rx.schedulers.Schedulers;
 
@@ -61,7 +62,7 @@ public class StudentServiceImpl implements StudentService
 
         List<Observable<Student>> observables = new ArrayList<Observable<Student>>();
 
-        List<Student> studs = new ArrayList<Student>();
+        final List<Student> studs = new ArrayList<Student>();
         logger.debug("add() :: more than one student creation start");
         for (final Student s : students)
         {
