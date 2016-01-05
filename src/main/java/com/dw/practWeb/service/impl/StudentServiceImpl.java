@@ -20,7 +20,6 @@ import com.dw.practWeb.service.StudentService;
 import com.dw.practWeb.utils.BeanMapper;
 
 import rx.Observable;
-import rx.Observable.OnSubscribe;
 import rx.plugins.RxJavaPlugins;
 import rx.schedulers.Schedulers;
 
@@ -33,9 +32,9 @@ public class StudentServiceImpl implements StudentService
     private StudentRepository studentRepository;
 
     @Inject
-    private BeanMapper        beanMapper;
+    private BeanMapper beanMapper;
 
-    private Logger            logger = LoggerFactory.getLogger(StudentService.class);
+    private Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Override
     public Student add(Student student)
@@ -90,21 +89,21 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public List<Student> get(List<Long> ids)
+    public List<Student> getByIds(List<Long> ids)
     {
         List<Student> students = studentRepository.findAll(ids);
         return beanMapper.mapCollection(students, Student.class, "student-1");
     }
 
     @Override
-    public List<Student> get(String city)
+    public List<Student> getByCity(String city)
     {
         return studentRepository.findByCity(city);
         // return studentRepository.findAll(StudentSpecification.getStudentByName(city));
     }
 
     @Override
-    public List<Student> get(String city, String name)
+    public List<Student> getByCityAndName(String city, String name)
     {
 
         return studentRepository.findByCityAndNameLike(city, "%" + name + "%");
@@ -113,9 +112,31 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public List<Student> get()
+    public List<Student> getAll()
     {
         List<Student> students = studentRepository.findAll();
-        return beanMapper.mapCollection(students, Student.class, "student-1");
+        return beanMapper.mapCollection(students, Student.class);
+    }
+    
+    @Override
+    public Student getById(Long id)
+    {
+        Student student = studentRepository.getOne(id);
+        return beanMapper.map(student, Student.class);
+    }
+    
+    @Override
+    public Student update(Long id, Student student)
+    {
+        Student attachStudent = studentRepository.getOne(id);
+        beanMapper.map(student, attachStudent, "student-2");
+        studentRepository.save(attachStudent);
+        return attachStudent;
+    }
+    
+    @Override
+    public void delete(Long id)
+    {
+        studentRepository.delete(id);
     }
 }

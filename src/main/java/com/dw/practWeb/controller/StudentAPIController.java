@@ -3,6 +3,7 @@ package com.dw.practWeb.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.websocket.server.PathParam;
 
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,12 +43,27 @@ public class StudentAPIController
         return studentService.add(students);
     }
 
+    @RequestMapping(value = WebConfig.UPDATE_STUDENT, method = RequestMethod.PATCH,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Student update(@PathVariable(value = "id") Long id, @RequestBody Student student)
+    {
+        return studentService.update(id, student);
+    }
+
+    @RequestMapping(value = WebConfig.DELETE_STUDENT, method = RequestMethod.DELETE,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@PathVariable(value = "id") Long id)
+    {
+        studentService.delete(id);
+    }
+
     @RequestMapping(value = WebConfig.GET_STUDENT_BY_IDS, method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Student> get(@RequestParam(value = "id") List<Long> ids)
     {
-        return studentService.get(ids);
+        return studentService.getByIds(ids);
     }
 
     @RequestMapping(value = WebConfig.GET_STUDENT, method = RequestMethod.GET,
@@ -55,22 +71,31 @@ public class StudentAPIController
     @ResponseBody
     public List<Student> get()
     {
-        return studentService.get();
+        return studentService.getAll();
+    }
+
+    @RequestMapping(value = WebConfig.GET_STUDENT_BY_ID, method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Student getById(@PathVariable(value = "id") String id)
+    {
+        return studentService.getById(Long.valueOf(id.toString()));
     }
 
     @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY, method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Student> get(@PathVariable(value = "city") String city)
+    public List<Student> getByCity(@PathVariable(value = "city") String city)
     {
-        return studentService.get(city);
+        return studentService.getByCity(city);
     }
 
     @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY_AND_NAME, method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Student> get(@RequestParam(value = "city") String city, @RequestParam(value = "name") String name)
+    public List<Student> getByCityAndName(@RequestParam(value = "city") String city,
+                                          @RequestParam(value = "name") String name)
     {
-        return studentService.get(city, name);
+        return studentService.getByCityAndName(city, name);
     }
 }

@@ -7,7 +7,7 @@
     <div class="header">
         <input type="text" id="searchKey"/>
         <button id="btnSearch">Search</button>
-        <button id="btnAdd">New Wine</button>
+        <button id="btnAdd">New Student</button>
     </div>
 
     <div class="leftArea">
@@ -16,6 +16,9 @@
 
     <div class="mainArea">
     <form id="studentForm">
+        <label>Id :</label> 
+        <input type="text" id="id" name="id" disabled="disabled">
+        
         <label>Name :</label> 
         <input type="text" id="name" name="name" required>
         

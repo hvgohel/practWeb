@@ -15,4 +15,24 @@
             <b>city</b>
         </field>
     </mapping>
+    
+    <mapping map-id="student-2" wildcard="false">
+        <class-a>com.dw.practWeb.model.Student</class-a>
+        <class-b>com.dw.practWeb.model.Student</class-b>
+
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+
+        <field>
+            <a>city</a>
+            <b>city</b>
+        </field>
+        
+        <field>
+            <a>dateOfBirth</a>
+            <b>dateOfBirth</b>
+        </field>
+    </mapping>
 </mappings>

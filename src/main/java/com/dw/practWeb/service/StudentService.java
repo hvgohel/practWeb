@@ -13,11 +13,17 @@ public interface StudentService
 
     List<Student> add(List<Student> students);
 
-    List<Student> get(List<Long> ids);
+    List<Student> getByIds(List<Long> ids);
 
-    List<Student> get(String city);
+    List<Student> getByCity(String city);
 
-    List<Student> get(String city, String name);
+    List<Student> getByCityAndName(String city, String name);
 
-    List<Student> get();
+    List<Student> getAll();
+
+    Student getById(Long id);
+
+    Student update(Long id, Student student);
+
+    void delete(Long id);
 }
