@@ -33,9 +33,9 @@ public class StudentServiceImpl implements StudentService
     private StudentRepository studentRepository;
 
     @Inject
-    private BeanMapper beanMapper;
+    private BeanMapper        beanMapper;
 
-    private Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private Logger            logger = LoggerFactory.getLogger(StudentService.class);
 
     @Override
     public Student add(Student student)
@@ -110,5 +110,12 @@ public class StudentServiceImpl implements StudentService
         return studentRepository.findByCityAndNameLike(city, "%" + name + "%");
         // return studentRepository.findAll(Specifications.where(StudentSpecification.getByCity(city))
         // .and(StudentSpecification.getByName(name)));
+    }
+
+    @Override
+    public List<Student> get()
+    {
+        List<Student> students = studentRepository.findAll();
+        return beanMapper.mapCollection(students, Student.class, "student-1");
     }
 }

@@ -42,12 +42,20 @@ public class StudentAPIController
         return studentService.add(students);
     }
 
-    @RequestMapping(value = WebConfig.GET_STUDENTS, method = RequestMethod.GET,
+    @RequestMapping(value = WebConfig.GET_STUDENT_BY_IDS, method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Student> get(@RequestParam(value = "id") List<Long> ids)
     {
         return studentService.get(ids);
+    }
+
+    @RequestMapping(value = WebConfig.GET_STUDENT, method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Student> get()
+    {
+        return studentService.get();
     }
 
     @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY, method = RequestMethod.GET,

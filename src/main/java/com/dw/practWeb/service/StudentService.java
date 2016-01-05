@@ -18,4 +18,6 @@ public interface StudentService
     List<Student> get(String city);
 
     List<Student> get(String city, String name);
+
+    List<Student> get();
 }

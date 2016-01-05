@@ -1,7 +1,7 @@
 // The root URL for the RESTful services
-var rootURL = "http://localhost:8080/test/student";
+var rootURL = "http://localhost:8080/test";
 
-var currentWine;
+var student;
 
 // Retrieve wine list when application starts 
 findAll();
@@ -56,30 +56,30 @@ function search(searchKey) {
 	if (searchKey == '') 
 		findAll();
 	else
-		findByName(searchKey);
+		findByCity(searchKey);
 }
 
 function newWine() {
 	$('#btnDelete').hide();
-	currentWine = {};
-	renderDetails(currentWine); // Display empty form
+	student = {};
+	renderDetails(student); // Display empty form
 }
 
 function findAll() {
 	console.log('findAll');
 	$.ajax({
 		type: 'GET',
-		url: rootURL,
+		url: rootURL + '/student',
 		dataType: "json", // data type of response
 		success: renderList
 	});
 }
 
-function findByName(searchKey) {
-	console.log('findByName: ' + searchKey);
+function findByCity(searchKey) {
+	console.log('findByCity: ' + searchKey);
 	$.ajax({
 		type: 'GET',
-		url: rootURL + '/search/' + searchKey,
+		url: rootURL + '/' + searchKey + '/students',
 		dataType: "json",
 		success: renderList 
 	});
@@ -94,8 +94,8 @@ function findById(id) {
 		success: function(data){
 			$('#btnDelete').show();
 			console.log('findById success: ' + data.name);
-			currentWine = data;
-			renderDetails(currentWine);
+			student = data;
+			renderDetails(student);
 		}
 	});
 }
@@ -105,7 +105,7 @@ function addStudent() {
 	$.ajax({
 		type: 'POST',
 		contentType: 'application/json',
-		url: rootURL,
+		url: rootURL + '/student',
 		dataType: "json",
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR){
