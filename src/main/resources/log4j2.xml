@@ -5,6 +5,27 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %X{userID} %X{sessionID} %logger{36} - %msg%n" />
         </Console>
+
+        <RollingRandomAccessFile name="Console" fileName="/home/developer/logs/flyway/flyway-logger.log"
+            filePattern="/logs/es/$${date:yyyy-MM}/%d{dd-MMM-yyyy}-app-%i.log.gz">
+            <PatternLayout
+                pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %X{reqID} %X{userID} %X{sessionID} %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="httpRequests" fileName="/home/developer/logs/flyway/http-client-requests.log"
+            filePattern="/logs/es/$${date:yyyy-MM}/%d{dd-MMM-yyyy}-app-%i.log.gz">
+            <PatternLayout
+                pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %X{reqID} %X{userID} %X{sessionID} %logger{36} - %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB" />
+            </Policies>
+        </RollingRandomAccessFile>
+        
     </appenders>
 
     <loggers>
@@ -13,7 +34,7 @@
         </root>
 
         <logger name="org.springframework" level="DEBUG" />
-    
+
         <logger name="org.hibernate" level="ERROR" />
         <logger name="org.hibernate.type" level="ERROR" />
 
