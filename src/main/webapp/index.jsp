@@ -11,7 +11,7 @@
     </div>
 
     <div class="leftArea">
-        <ul id="wineList"></ul>
+        <ul id="studentList"></ul>
     </div>
 
     <div class="mainArea">
