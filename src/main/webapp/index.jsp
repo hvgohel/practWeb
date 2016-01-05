@@ -1,15 +1,24 @@
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="hello.js"></script>
+<link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-    <label>Name:</label>
-    <input type="text" id="name" name="name" required>
+    <form id="studentForm">
+        <label>Name :</label> 
+        <input type="text" id="name" name="name" required>
+        
+        <label>Date Of Birth : </label> 
+        <input type="text" id="dob" name="dob">
+        
+        <label>City : </label> 
+        <input type="text" id="city" name="city">
 
-    <button id="btnSave">Save</button>
-    <button id="btnDelete">Delete</button>
+        <button id="btnSave">Save</button>
+        <button id="btnDelete">Delete</button>
+    </form>
 
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
