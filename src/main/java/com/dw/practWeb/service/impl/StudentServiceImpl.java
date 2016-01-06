@@ -1,11 +1,20 @@
 package com.dw.practWeb.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerFactory;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,6 +25,7 @@ import com.dw.practWeb.model.MyObserver;
 import com.dw.practWeb.model.MyRxJavaSchedulersHook;
 import com.dw.practWeb.model.Student;
 import com.dw.practWeb.repository.StudentRepository;
+import com.dw.practWeb.scheduler.job.Sample;
 import com.dw.practWeb.service.StudentService;
 import com.dw.practWeb.utils.BeanMapper;
 
@@ -30,7 +40,7 @@ public class StudentServiceImpl implements StudentService
 
     @Inject
     private StudentRepository studentRepository;
-
+    
     @Inject
     private BeanMapper beanMapper;
 
@@ -49,6 +59,8 @@ public class StudentServiceImpl implements StudentService
             e.printStackTrace();
         }
         student = studentRepository.save(student);
+        
+        schedulerExample(student.getId());
         return beanMapper.map(student, Student.class, "student-1");
     }
 
@@ -139,4 +151,33 @@ public class StudentServiceImpl implements StudentService
     {
         studentRepository.delete(id);
     }
+
+    private void schedulerExample(Long id)
+    {
+        logger.debug("schedulerExample() :: execute");
+
+        Date timeToExecute = new Date(System.currentTimeMillis() + 60 * 1000);
+
+        JobDetail jobDetail = JobBuilder.newJob(Sample.class).usingJobData("id", id)
+                .withIdentity(Sample.class.getName()).build();
+
+        // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName())
+        // .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
+
+        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName()).startAt(timeToExecute).build();
+        
+        try
+        {
+            SchedulerFactory schedulerFactory = new StdSchedulerFactory();
+            Scheduler scheduler = schedulerFactory.getScheduler();
+            scheduler.start();
+            scheduler.scheduleJob(jobDetail, trigger);
+            logger.debug("schedulerExample() ::  schedule");
+        }
+        catch (Exception exception)
+        {
+            logger.debug("schedulerExample() ::  error - ", exception);
+        }
+    }
+    
 }
