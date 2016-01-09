@@ -1,9 +1,10 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/styles.css" />
+<title>index</title>
 </head>
 <body>
-
+    <a href="welcome">Go Home</a>
     <div class="header">
         <input type="text" id="searchKey"/>
         <button id="btnSearch">Search</button>
