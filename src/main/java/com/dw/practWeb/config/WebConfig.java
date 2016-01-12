@@ -12,4 +12,8 @@ public class WebConfig
     public static final String GET_STUDENT_BY_ID = "/test/student/{id}"; // GET
     public static final String GET_STUDENTS_BY_CITY = "/test/{city}/students"; // GET
     public static final String GET_STUDENTS_BY_CITY_AND_NAME = "/test/studs"; // GET
+    
+    
+    // Customer API
+    public static final String CREATE_CUSTOMER = "/data/customer"; // POST
 }

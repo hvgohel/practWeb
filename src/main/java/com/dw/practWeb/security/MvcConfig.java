@@ -1,7 +1,8 @@
-package com.dw.practWeb.utils;
+package com.dw.practWeb.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -15,6 +16,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/signup").setViewName("signup");
         // registry.addViewController("/hello").setViewName("hello");
         // registry.addViewController("/login").setViewName("login");
     }

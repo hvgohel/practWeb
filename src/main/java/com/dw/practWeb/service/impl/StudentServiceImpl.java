@@ -7,7 +7,6 @@ import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
-import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -127,6 +126,11 @@ public class StudentServiceImpl implements StudentService
     public List<Student> getAll()
     {
         List<Student> students = studentRepository.findAll();
+
+        //Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s -> s.getCity()));
+
+        //System.out.println(map);
+        
         return beanMapper.mapCollection(students, Student.class);
     }
     

@@ -1,17 +1,19 @@
-package com.dw.practWeb.utils;
+package com.dw.practWeb.security;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Override
@@ -19,10 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
             .authorizeRequests()
-                .antMatchers("/home").permitAll()
+                //.antMatchers("/data").permitAll()
+                //.antMatchers("/signup").permitAll()
                 //.antMatchers("/", "/welcome").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
+            .csrf()
+                .disable()
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -31,14 +36,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .permitAll();
     }
 
-    @Inject
-    UserDetailsService userDetailsService;
-    
+     @Inject
+     UserDetailsService userDetailsService;
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
     {
         //auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 
-        auth.userDetailsService(userDetailsService);
+         auth.userDetailsService(userDetailsService);
     }
 }

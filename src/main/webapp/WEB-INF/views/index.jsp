@@ -4,7 +4,7 @@
 <title>index</title>
 </head>
 <body>
-    <a href="welcome">Go Home</a>
+    <a href="home">Go Home</a>
     <div class="header">
         <input type="text" id="searchKey"/>
         <button id="btnSearch">Search</button>

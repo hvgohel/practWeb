@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dw.practWeb.config.WebConfig;
 import com.dw.practWeb.model.Student;
+import com.dw.practWeb.service.SecurityRegisteredUserManager;
 import com.dw.practWeb.service.StudentService;
 
 @RestController
@@ -25,6 +26,9 @@ public class StudentAPIController
 {
     @Inject
     private StudentService studentService;
+    
+    @Inject
+    private SecurityRegisteredUserManager securityRegisteredUserManager;
 
     @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,5 +100,13 @@ public class StudentAPIController
                                           @RequestParam(value = "name") String name)
     {
         return studentService.getByCityAndName(city, name);
+    }
+
+    @RequestMapping(value = "/test/getuser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Long getUser()
+    {
+        Long regId = securityRegisteredUserManager.getCurrentRegisteredUserId();
+        return regId;
     }
 }
