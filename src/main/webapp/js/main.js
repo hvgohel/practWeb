@@ -1,6 +1,8 @@
 // The root URL for the RESTful services
 var rootURL = "http://localhost:8080/test";
 
+var baseURL = "http://localhost:8080";
+
 var student;
 
 // Retrieve wine list when application starts
@@ -51,6 +53,39 @@ $("img").error(function() {
     $(this).attr("src", "pics/generic.jpg");
 
 });
+
+
+//signup bution
+$('#signupCustomer').click(function() {
+    addCustomer();
+    return false;
+});
+
+function addCustomer() {
+    var signupData = {
+            firstName : $('#fname').val(),
+            lastName : $('#lname').val(),
+            registration : {
+                password : $('#password').val(),
+                userName : $('#userName').val(),
+            }
+        };
+    
+    console.log('addCustomer');
+    $.ajax({
+        type : 'POST',
+        contentType : 'application/json',
+        url : baseURL + '/data/customer',
+        dataType : "json",
+        data : JSON.stringify(signupData),
+        success : function(data, textStatus, jqXHR) {
+            alert('customer signup successfully');
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+            alert('customer signup error: ' + textStatus);
+        }
+    });
+}
 
 function search(searchKey) {
     if (searchKey == '')

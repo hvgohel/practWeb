@@ -7,7 +7,7 @@
 <title>Registration</title>
 </head>
 <body>
-<form action="/signup" method="post">
+<form id="signup">
     <div>
     <label> First Name : </label>
     <input type="text" id="fname" name="fname"><br/>
@@ -18,7 +18,11 @@
     <input type="text" id="userName" name="userName"><br/>
     <label> Password : </label>
     <input type="password" id="password" name="password"><br/>
-    <button type="submit">Create</button>
+    
+    <button  id=signupCustomer name="signupCustomer">Create</button>
 </form>
+
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
