@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.dw.practWeb.model.Registration;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,7 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
             .authorizeRequests()
-                .antMatchers("/home").authenticated()
+                .antMatchers("/home").hasRole(Registration.Role.USER.name())
+                .antMatchers("/index").hasRole(Registration.Role.ADMIN.name())
                 //.antMatchers("/signup").permitAll()
                 //.antMatchers("/", "/welcome").permitAll()
                 .anyRequest().permitAll()
@@ -37,8 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .successHandler(success)
                 .permitAll()
                 .and()
-            .logout()
-                .permitAll();
+            .exceptionHandling()
+                .accessDeniedPage("/error");
+           
     }
 
      @Inject
