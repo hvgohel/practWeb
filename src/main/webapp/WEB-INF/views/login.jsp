@@ -25,8 +25,11 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div>
             <input type="submit" value="Sign In" />
-            <input type="submit" value="Sign Up" />
+            <button id="signip" name="signup">Sign Up</button>
         </div>
     </form>
+    
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
