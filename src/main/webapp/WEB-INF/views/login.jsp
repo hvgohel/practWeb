@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Spring Security Example</title>
+<title>login</title>
 </head>
 <body>
     <c:if test="${param.error ne null}">
@@ -24,8 +24,8 @@
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <div>
-            <input type="submit" value="Sign In" />
-            <button id="signip" name="signup">Sign Up</button>
+            <input type="submit"  value="Sign In"/>
+            <input type="button" value="Sign Up">
         </div>
     </form>
     

@@ -7,8 +7,8 @@
         <title>Hello World!</title>
     </head>
     <body>
-        <<a href="index">Go Index</a>
-        <h1>Hello <b><c:out value="${pageContext.request.remoteUser}"/></b> </h1>
+        <a href="index">Go Index</a>
+        <h1>${msg} <b><c:out value="${pageContext.request.remoteUser}"/></b> </h1>
         <form action="/logout" method="post">
             <input type="submit" value="Sign Out"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
