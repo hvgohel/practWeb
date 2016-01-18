@@ -18,24 +18,29 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dw.practWeb.config.WebConfig;
+import com.dw.practWeb.model.Sample;
 import com.dw.practWeb.model.Student;
 import com.dw.practWeb.security.SecurityServiceHelper;
 import com.dw.practWeb.service.SecurityRegisteredUserManager;
 import com.dw.practWeb.service.StudentService;
+import com.dw.practWeb.service.impl.SampleServieImpl;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class StudentAPIController
 {
     @Inject
-    private StudentService studentService;
-    
+    private StudentService                studentService;
+
     @Inject
     private SecurityRegisteredUserManager securityRegisteredUserManager;
-    
-    @Inject
-    private SecurityServiceHelper securityServiceHelper;
 
+    @Inject
+    private SecurityServiceHelper         securityServiceHelper;
+
+    @Inject
+    private SampleServieImpl sampleServieImpl;
+    
     @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -124,7 +129,7 @@ public class StudentAPIController
         securityServiceHelper.loginAsUser(userName);
         System.out.println("user has been successfully login");
     }
-    
+
     @RequestMapping(value = "/login/withSystem", method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -132,5 +137,13 @@ public class StudentAPIController
     {
         securityServiceHelper.loginAsSystem();
         System.out.println("system has been successfully login");
+    }
+
+    @RequestMapping(value = "/sample", method = RequestMethod.POST,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Sample createSample(@RequestBody Sample sample)
+    {
+        return sampleServieImpl.add(sample);
     }
 }
