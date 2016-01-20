@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.dw.practWeb.annotation.MobileNumber;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 
@@ -25,6 +26,7 @@ public class Customer extends BaseModel
     @Column(name = "`lastname`")
     private String lastName;
     
+    @MobileNumber
     @Column(name = "`mobilenumber`")
     private String mobileNumber;
     
