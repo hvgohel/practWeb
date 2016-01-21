@@ -39,6 +39,7 @@
         <logger name="org.hibernate.type" level="ERROR" />
 
         <logger name="com.dw.practWeb" level="DEBUG" />
+        <logger name="db.migration" level="DEBUG" />
 
     </loggers>
 </configuration>
