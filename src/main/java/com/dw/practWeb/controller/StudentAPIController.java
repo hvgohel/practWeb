@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dw.practWeb.config.WebConfig;
 import com.dw.practWeb.model.Sample;
 import com.dw.practWeb.model.Student;
+import com.dw.practWeb.paging.PagedResult;
 import com.dw.practWeb.security.SecurityServiceHelper;
 import com.dw.practWeb.service.SecurityRegisteredUserManager;
 import com.dw.practWeb.service.StudentService;
@@ -83,7 +84,7 @@ public class StudentAPIController
     @RequestMapping(value = WebConfig.GET_STUDENT, method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Student> get()
+    public PagedResult<Student> get()
     {
         return studentService.getAll();
     }

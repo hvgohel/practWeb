@@ -157,6 +157,12 @@
             <version>1.6</version>
         </dependency>
         
+        <dependency>
+           <groupId>sk.seges.sesam</groupId>
+           <artifactId>sesam-core</artifactId>
+           <version>1.2.2</version>
+        </dependency>
+        
     </dependencies>
     <build>
         <finalName>practWeb</finalName>

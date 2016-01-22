@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.dw.practWeb.model.Student;
+import com.dw.practWeb.paging.PagedResult;
 
 @Service
 public interface StudentService
@@ -21,7 +22,7 @@ public interface StudentService
     List<Student> getByCityAndName(String city, String name);
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    List<Student> getAll();
+    PagedResult<Student> getAll();
 
     Student getById(Long id);
 

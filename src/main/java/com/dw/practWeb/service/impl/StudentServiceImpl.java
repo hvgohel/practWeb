@@ -16,6 +16,11 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dw.practWeb.model.MyObserver;
 import com.dw.practWeb.model.MyRxJavaSchedulersHook;
 import com.dw.practWeb.model.Student;
+import com.dw.practWeb.paging.PagedResult;
 import com.dw.practWeb.repository.StudentRepository;
 import com.dw.practWeb.scheduler.job.Sample;
 import com.dw.practWeb.service.StudentService;
@@ -39,11 +45,11 @@ public class StudentServiceImpl implements StudentService
 
     @Inject
     private StudentRepository studentRepository;
-    
-    @Inject
-    private BeanMapper beanMapper;
 
-    private Logger logger = LoggerFactory.getLogger(StudentService.class);
+    @Inject
+    private BeanMapper        beanMapper;
+
+    private Logger            logger = LoggerFactory.getLogger(StudentService.class);
 
     @Override
     public Student add(Student student)
@@ -58,7 +64,7 @@ public class StudentServiceImpl implements StudentService
             e.printStackTrace();
         }
         student = studentRepository.save(student);
-        
+
         schedulerExample(student.getId());
         return beanMapper.map(student, Student.class, "student-1");
     }
@@ -123,24 +129,28 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public List<Student> getAll()
+    public PagedResult<Student> getAll()
     {
-        List<Student> students = studentRepository.findAll();
+        Sort sort = new Sort(Direction.DESC, new String[]
+        { "name", "city", "id" });
 
-        //Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s -> s.getCity()));
+        Pageable p = new PageRequest(0, 20, sort);
+        Page<Student> students = studentRepository.findAll(p);
 
-        //System.out.println(map);
-        
+        // Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s -> s.getCity()));
+
+        // System.out.println(map);
+
         return beanMapper.mapCollection(students, Student.class);
     }
-    
+
     @Override
     public Student getById(Long id)
     {
         Student student = studentRepository.getOne(id);
         return beanMapper.map(student, Student.class);
     }
-    
+
     @Override
     public Student update(Long id, Student student)
     {
@@ -149,7 +159,7 @@ public class StudentServiceImpl implements StudentService
         studentRepository.save(attachStudent);
         return attachStudent;
     }
-    
+
     @Override
     public void delete(Long id)
     {
@@ -168,8 +178,9 @@ public class StudentServiceImpl implements StudentService
         // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName())
         // .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
 
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName()).startAt(timeToExecute).build();
-        
+        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName()).startAt(timeToExecute)
+                .build();
+
         try
         {
             SchedulerFactory schedulerFactory = new StdSchedulerFactory();
@@ -183,5 +194,5 @@ public class StudentServiceImpl implements StudentService
             logger.debug("schedulerExample() ::  error - ", exception);
         }
     }
-    
+
 }
