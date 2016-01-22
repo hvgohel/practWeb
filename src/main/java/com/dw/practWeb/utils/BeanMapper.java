@@ -19,7 +19,9 @@ public interface BeanMapper
 
     public <T, D> List<D> mapCollection(Collection<T> list, Class<D> classDTOName);
 
-    public <T, D> PagedResult<T> mapCollection(Page<T> page, Class<T> class1);
-
     public <T, D> List<D> mapCollection(Collection<T> list, Class<D> classDTOName, String mapId);
+
+    public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName);
+
+    public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName, String mapId);
 }

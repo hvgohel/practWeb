@@ -79,29 +79,31 @@ public class BeanMapperImpl extends DozerBeanMapper implements BeanMapper
     }
 
     @Override
-    public <T, D> PagedResult<T> mapCollection(Page<T> list, Class<T> class1)
+    public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName)
     {
 
-        PagedResult<T> result = new PagedResult<T>();
+        PagedResult<D> result = new PagedResult<D>();
 
-        List<T> dtoList = new ArrayList<T>();
+        List<D> dtoList = new ArrayList<D>();
 
-        if (list != null)
+        if (page != null)
         {
-            for (T f : list)
+            for (T f : page)
             {
-                dtoList.add(map(f, class1));
+                dtoList.add(map(f, classDTOName));
             }
         }
 
         // name: DESC,city: DESC,id: DESC
-        String[] sortStr = list.getSort().toString().split(",");
-        String[] sortStr1 = {};
-        
+        String[] sortStr = page.getSort().toString().split(",");
+        String[] sortStr1 =
+        {};
+
         String order = "";
         List<String> sortOn = new ArrayList<String>();
 
-        for(String s : sortStr){
+        for (String s : sortStr)
+        {
             sortStr1 = s.split(":");
             sortOn.add(StringUtils.trim(sortStr1[0]));
             order = sortStr1[1];
@@ -109,11 +111,52 @@ public class BeanMapperImpl extends DozerBeanMapper implements BeanMapper
 
         result.setSortOn(sortOn.toString());
         result.setSortOrder(StringUtils.trim(order));
-        result.setPageNo(list.getNumber());
+        result.setPageNo(page.getNumber());
         result.setResults(dtoList);
-        result.setRpp(list.getNumberOfElements());
-        result.setTotalResults(list.getTotalElements());
-        result.setTotalPage(list.getTotalPages());
+        result.setRpp(page.getNumberOfElements());
+        result.setTotalResults(page.getTotalElements());
+        result.setTotalPage(page.getTotalPages());
+
+        return result;
+    }
+
+    @Override
+    public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName, String mapId)
+    {
+        PagedResult<D> result = new PagedResult<D>();
+
+        List<D> dtoList = new ArrayList<D>();
+
+        if (page != null)
+        {
+            for (T f : page)
+            {
+                dtoList.add(map(f, classDTOName, mapId));
+            }
+        }
+
+        // name: DESC,city: DESC,id: DESC
+        String[] sortStr = page.getSort().toString().split(",");
+        String[] sortStr1 =
+        {};
+
+        String order = "";
+        List<String> sortOn = new ArrayList<String>();
+
+        for (String s : sortStr)
+        {
+            sortStr1 = s.split(":");
+            sortOn.add(StringUtils.trim(sortStr1[0]));
+            order = sortStr1[1];
+        }
+
+        result.setSortOn(sortOn.toString());
+        result.setSortOrder(StringUtils.trim(order));
+        result.setPageNo(page.getNumber());
+        result.setResults(dtoList);
+        result.setRpp(page.getNumberOfElements());
+        result.setTotalResults(page.getTotalElements());
+        result.setTotalPage(page.getTotalPages());
 
         return result;
     }
