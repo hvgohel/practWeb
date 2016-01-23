@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 @Entity
 @Table(name = "sample")
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Sample extends Base<String>
+public class Sample extends Base
 {
     private String name;
 
