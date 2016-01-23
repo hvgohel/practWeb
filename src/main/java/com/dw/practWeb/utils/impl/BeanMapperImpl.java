@@ -50,28 +50,44 @@ public class BeanMapperImpl extends DozerBeanMapper implements BeanMapper
 
     public <T, D> List<D> mapCollection(Collection<T> list, Class<D> classDTOName)
     {
-        List<D> dtoList = new ArrayList<D>();
-
-        if (list != null)
-        {
-            for (T f : list)
-            {
-                dtoList.add(map(f, classDTOName));
-            }
-        }
-
-        return dtoList;
+        return fill(null, list, classDTOName, null);
     }
 
     public <T, D> List<D> mapCollection(Collection<T> list, Class<D> classDTOName, String mapId)
     {
+        return fill(null, list, classDTOName, mapId);
+    }
+
+    private <T, D> void add(List<D> dtoList, T f, Class<D> classDTOName, String mapId)
+    {
+        if (mapId == null)
+        {
+            dtoList.add(map(f, classDTOName));
+        }
+
+        if (mapId != null)
+        {
+            dtoList.add(map(f, classDTOName, mapId));
+        }
+    }
+    
+    private <T, D> List<D> fill(Page<T> page, Collection<T> list, Class<D> classDTOName, String mapId)
+    {
         List<D> dtoList = new ArrayList<D>();
+
+        if (page != null)
+        {
+            for (T f : page)
+            {
+                add(dtoList, f, classDTOName, mapId);
+            }
+        }
 
         if (list != null)
         {
             for (T f : list)
             {
-                dtoList.add(map(f, classDTOName, mapId));
+                add(dtoList, f, classDTOName, mapId);
             }
         }
 
@@ -81,59 +97,20 @@ public class BeanMapperImpl extends DozerBeanMapper implements BeanMapper
     @Override
     public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName)
     {
-
-        PagedResult<D> result = new PagedResult<D>();
-
-        List<D> dtoList = new ArrayList<D>();
-
-        if (page != null)
-        {
-            for (T f : page)
-            {
-                dtoList.add(map(f, classDTOName));
-            }
-        }
-
-        // name: DESC,city: DESC,id: DESC
-        String[] sortStr = page.getSort().toString().split(",");
-        String[] sortStr1 =
-        {};
-
-        String order = "";
-        List<String> sortOn = new ArrayList<String>();
-
-        for (String s : sortStr)
-        {
-            sortStr1 = s.split(":");
-            sortOn.add(StringUtils.trim(sortStr1[0]));
-            order = sortStr1[1];
-        }
-
-        result.setSortOn(sortOn.toString());
-        result.setSortOrder(StringUtils.trim(order));
-        result.setPageNo(page.getNumber());
-        result.setResults(dtoList);
-        result.setRpp(page.getNumberOfElements());
-        result.setTotalResults(page.getTotalElements());
-        result.setTotalPage(page.getTotalPages());
-
-        return result;
+        return getPagedResult(page, classDTOName, null);
     }
 
     @Override
     public <T, D> PagedResult<D> mapCollection(Page<T> page, Class<D> classDTOName, String mapId)
     {
+        return getPagedResult(page, classDTOName, mapId);
+    }
+
+    private <T, D> PagedResult<D> getPagedResult(Page<T> page, Class<D> classDTOName, String mapId)
+    {
         PagedResult<D> result = new PagedResult<D>();
 
-        List<D> dtoList = new ArrayList<D>();
-
-        if (page != null)
-        {
-            for (T f : page)
-            {
-                dtoList.add(map(f, classDTOName, mapId));
-            }
-        }
+        List<D> dtoList = fill(page, null, classDTOName, mapId);
 
         // name: DESC,city: DESC,id: DESC
         String[] sortStr = page.getSort().toString().split(",");

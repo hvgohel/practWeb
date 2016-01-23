@@ -131,10 +131,10 @@ public class StudentServiceImpl implements StudentService
     @Override
     public PagedResult<Student> getAll()
     {
-        Sort sort = new Sort(Direction.DESC, new String[]
+        Sort sort = new Sort(Direction.ASC, new String[]
         { "name", "city", "id" });
 
-        Pageable p = new PageRequest(0, 20, sort);
+        Pageable p = new PageRequest(0, 3, sort);
         Page<Student> students = studentRepository.findAll(p);
 
         // Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s -> s.getCity()));
