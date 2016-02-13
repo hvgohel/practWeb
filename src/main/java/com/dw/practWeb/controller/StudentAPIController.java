@@ -1,9 +1,14 @@
 package com.dw.practWeb.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dw.practWeb.config.WebConfig;
 import com.dw.practWeb.model.Sample;
@@ -30,6 +36,8 @@ import com.dw.practWeb.service.impl.SampleServieImpl;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class StudentAPIController
 {
+    private Logger                        logger = LoggerFactory.getLogger(StudentAPIController.class);
+
     @Inject
     private StudentService                studentService;
 
@@ -40,8 +48,8 @@ public class StudentAPIController
     private SecurityServiceHelper         securityServiceHelper;
 
     @Inject
-    private SampleServieImpl sampleServieImpl;
-    
+    private SampleServieImpl              sampleServieImpl;
+
     @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -140,11 +148,31 @@ public class StudentAPIController
         System.out.println("system has been successfully login");
     }
 
-    @RequestMapping(value = "/sample", method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/sample", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Sample createSample(@RequestBody Sample sample)
     {
         return sampleServieImpl.add(sample);
     }
+
+    @RequestMapping(value = "/test/file", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void fileExample(@RequestParam(value = "file") MultipartFile[] multipartFiles) throws IllegalStateException,
+                                                                                          IOException
+    {
+        List<File> files = new ArrayList<File>();
+        for (MultipartFile m : multipartFiles)
+        {
+            files.add(getFile(m));
+        }
+    }
+
+    private File getFile(MultipartFile multipartFile) throws IllegalStateException, IOException
+    {
+        String fileName = multipartFile.getOriginalFilename();
+        File file = new File("/tmp/" + fileName);
+        multipartFile.transferTo(file);
+        return file;
+    }
+
 }
