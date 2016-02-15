@@ -15,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.MimeType;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +37,7 @@ import com.dw.practWeb.utils.AppConfig;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class StudentAPIController
+public class StudentAPIController extends BaseAPIController
 {
     private Logger                        logger = LoggerFactory.getLogger(StudentAPIController.class);
 
