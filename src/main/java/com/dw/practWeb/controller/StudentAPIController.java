@@ -4,15 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +35,7 @@ import com.dw.practWeb.security.SecurityServiceHelper;
 import com.dw.practWeb.service.SecurityRegisteredUserManager;
 import com.dw.practWeb.service.StudentService;
 import com.dw.practWeb.service.impl.SampleServieImpl;
+import com.dw.practWeb.utils.AppConfig;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -49,6 +54,9 @@ public class StudentAPIController
 
     @Inject
     private SampleServieImpl              sampleServieImpl;
+
+    @Inject
+    private AppConfig                     appConfig;
 
     @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -160,6 +168,8 @@ public class StudentAPIController
     public void fileExample(@RequestParam(value = "file") MultipartFile[] multipartFiles) throws IllegalStateException,
                                                                                           IOException
     {
+        logger.debug("{}", appConfig.getTest());
+
         List<File> files = new ArrayList<File>();
         for (MultipartFile m : multipartFiles)
         {
@@ -169,8 +179,9 @@ public class StudentAPIController
 
     private File getFile(MultipartFile multipartFile) throws IllegalStateException, IOException
     {
-        String fileName = multipartFile.getOriginalFilename();
-        File file = new File("/tmp/" + fileName);
+        String type[] = StringUtils.split(multipartFile.getOriginalFilename(), ".");
+        String fileName = UUID.randomUUID().toString() + "." + type[1];
+        File file = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
         multipartFile.transferTo(file);
         return file;
     }
