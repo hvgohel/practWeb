@@ -9,18 +9,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 @Entity
 @Table(name = "sample")
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Sample extends Base
-{
-    private String name;
+public class Sample extends Base {
+  private String name;
 
-    public String getName()
-    {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
 }

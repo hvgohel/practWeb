@@ -1,6 +1,5 @@
 package com.dw.practWeb.dto;
 
-public interface ErrorInfo
-{
-    String getCode();
+public interface ErrorInfo {
+  String getCode();
 }

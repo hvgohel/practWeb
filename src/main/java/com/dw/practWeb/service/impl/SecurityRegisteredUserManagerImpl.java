@@ -15,32 +15,27 @@ import com.dw.practWeb.service.SecurityRegisteredUserManager;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class SecurityRegisteredUserManagerImpl implements SecurityRegisteredUserManager
-{
-    @Inject
-    private RegistrationRepository registrationRepository;
+public class SecurityRegisteredUserManagerImpl implements SecurityRegisteredUserManager {
+  @Inject
+  private RegistrationRepository registrationRepository;
 
-    @Override
-    public Registration get(String userName)
-    {
-        return registrationRepository.findByUserName(userName);
+  @Override
+  public Registration get(String userName) {
+    return registrationRepository.findByUserName(userName);
+  }
+
+  @Override
+  public Long getCurrentRegisteredUserId() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication != null) {
+      Object principal = authentication.getPrincipal();
+      if (principal instanceof SecurityUser) {
+        SecurityUser user = (SecurityUser) principal;
+        return user.getId();
+      }
     }
 
-    @Override
-    public Long getCurrentRegisteredUserId()
-    {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null)
-        {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof SecurityUser)
-            {
-                SecurityUser user = (SecurityUser) principal;
-                return user.getId();
-            }
-        }
-
-        return null;
-    }
+    return null;
+  }
 }

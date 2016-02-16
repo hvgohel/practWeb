@@ -9,24 +9,23 @@ import com.dw.practWeb.model.Student;
 import com.dw.practWeb.paging.PagedResult;
 
 @Service
-public interface StudentService
-{
-    Student add(Student student);
+public interface StudentService {
+  Student add(Student student);
 
-    List<Student> add(List<Student> students);
+  List<Student> add(List<Student> students);
 
-    List<Student> getByIds(List<Long> ids);
+  List<Student> getByIds(List<Long> ids);
 
-    List<Student> getByCity(String city);
+  List<Student> getByCity(String city);
 
-    List<Student> getByCityAndName(String city, String name);
+  List<Student> getByCityAndName(String city, String name);
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
-    PagedResult<Student> getAll();
+  @PreAuthorize("hasAnyRole('ROLE_USER')")
+  PagedResult<Student> getAll();
 
-    Student getById(Long id);
+  Student getById(Long id);
 
-    Student update(Long id, Student student);
+  Student update(Long id, Student student);
 
-    void delete(Long id);
+  void delete(Long id);
 }

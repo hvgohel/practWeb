@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.dw.practWeb.model.Contact;
 
-public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpecificationExecutor<Contact>
-{
+public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpecificationExecutor<Contact> {
 
 }

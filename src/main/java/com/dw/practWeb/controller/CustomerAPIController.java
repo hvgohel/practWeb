@@ -16,15 +16,13 @@ import com.dw.practWeb.service.CustomerService;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class CustomerAPIController
-{
-    @Inject
-    private CustomerService customerService;
+public class CustomerAPIController {
+  @Inject
+  private CustomerService customerService;
 
-    @RequestMapping(value = WebConfig.CREATE_CUSTOMER, method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    public Customer create(@RequestBody Customer customer)
-    {
-        return customerService.create(customer);
-    }
+  @RequestMapping(value = WebConfig.CREATE_CUSTOMER, method = RequestMethod.POST,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public Customer create(@RequestBody Customer customer) {
+    return customerService.create(customer);
+  }
 }

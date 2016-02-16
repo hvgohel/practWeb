@@ -15,7 +15,7 @@
             <b>city</b>
         </field>
     </mapping>
-    
+
     <mapping map-id="student-2" wildcard="false">
         <class-a>com.dw.practWeb.model.Student</class-a>
         <class-b>com.dw.practWeb.model.Student</class-b>
@@ -29,7 +29,7 @@
             <a>city</a>
             <b>city</b>
         </field>
-        
+
         <field>
             <a>dateOfBirth</a>
             <b>dateOfBirth</b>

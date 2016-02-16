@@ -15,53 +15,44 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 @Table(name = "registration")
 @JsonSerialize(include = Inclusion.NON_NULL)
 @EntityListeners(RegistrationListener.class)
-public class Registration extends BaseModel
-{
-    @Column(name = "`username`")
-    private String userName;
+public class Registration extends BaseModel {
+  @Column(name = "`username`")
+  private String userName;
 
-    private String password;
+  private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
-    public String getUserName()
-    {
-        return userName;
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public static enum Role {
+    ADMIN, USER;
+
+    public String getAuthority() {
+      return "ROLE_" + name();
     }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public Role getRole()
-    {
-        return role;
-    }
-
-    public void setRole(Role role)
-    {
-        this.role = role;
-    }
-
-    public static enum Role
-    {
-        ADMIN, USER;
-
-        public String getAuthority()
-        {
-            return "ROLE_" + name();
-        }
-    }
+  }
 }

@@ -7,26 +7,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-public class MvcConfig extends WebMvcConfigurerAdapter
-{
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry)
-    {
-        registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/index").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/signup").setViewName("signup");
-        registry.addViewController("/accessDenied").setViewName("accessDenied");
-        // registry.addViewController("/hello").setViewName("hello");
-        // registry.addViewController("/login").setViewName("login");
-    }
+public class MvcConfig extends WebMvcConfigurerAdapter {
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/home").setViewName("home");
+    registry.addViewController("/index").setViewName("index");
+    registry.addViewController("/login").setViewName("login");
+    registry.addViewController("/signup").setViewName("signup");
+    registry.addViewController("/accessDenied").setViewName("accessDenied");
+    // registry.addViewController("/hello").setViewName("hello");
+    // registry.addViewController("/login").setViewName("login");
+  }
 
-    @Bean
-    public InternalResourceViewResolver viewResolver()
-    {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
+  @Bean
+  public InternalResourceViewResolver viewResolver() {
+    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+    resolver.setPrefix("/WEB-INF/views/");
+    resolver.setSuffix(".jsp");
+    return resolver;
+  }
 }

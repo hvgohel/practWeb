@@ -17,58 +17,49 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 @Entity
 @Table(name = "student")
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Student
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+public class Student {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  Long id;
 
-    String name;
+  String name;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "`dateofbirth`")
-    Date dateOfBirth;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "`dateofbirth`")
+  Date dateOfBirth;
 
-    String city;
+  String city;
 
-    public Long getId()
-    {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getName()
-    {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getCity()
-    {
-        return city;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public void setCity(String city)
-    {
-        this.city = city;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public Date getDateOfBirth()
-    {
-        return dateOfBirth;
-    }
+  public Date getDateOfBirth() {
+    return dateOfBirth;
+  }
 
-    public void setDateOfBirth(Date dateOfBirth)
-    {
-        this.dateOfBirth = dateOfBirth;
-    }
+  public void setDateOfBirth(Date dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
 
 }

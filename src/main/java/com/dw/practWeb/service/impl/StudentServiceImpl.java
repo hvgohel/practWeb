@@ -40,159 +40,140 @@ import rx.schedulers.Schedulers;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
-public class StudentServiceImpl implements StudentService
-{
+public class StudentServiceImpl implements StudentService {
 
-    @Inject
-    private StudentRepository studentRepository;
+  @Inject
+  private StudentRepository studentRepository;
 
-    @Inject
-    private BeanMapper        beanMapper;
+  @Inject
+  private BeanMapper beanMapper;
 
-    private Logger            logger = LoggerFactory.getLogger(StudentService.class);
+  private Logger logger = LoggerFactory.getLogger(StudentService.class);
 
-    @Override
-    public Student add(Student student)
-    {
-        logger.debug("add() :: start");
-        try
-        {
-            Thread.sleep(5000l);
+  @Override
+  public Student add(Student student) {
+    logger.debug("add() :: start");
+    try {
+      Thread.sleep(5000L);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    student = studentRepository.save(student);
+
+    schedulerExample(student.getId());
+    return beanMapper.map(student, Student.class, "student-1");
+  }
+
+  @Override
+  public List<Student> add(List<Student> students) {
+
+    MyRxJavaSchedulersHook hook = new MyRxJavaSchedulersHook();
+    RxJavaPlugins.getInstance().registerSchedulersHook(hook);
+
+    List<Observable<Student>> observables = new ArrayList<Observable<Student>>();
+
+    final List<Student> studs = new ArrayList<Student>();
+
+    logger.debug("add() :: more than one student creation start");
+
+    for (final Student s : students) {
+      Observable<Student> o = Observable.fromCallable(new Callable<Student>() {
+
+        @Override
+        public Student call() throws Exception {
+          Student stud = add(s);
+          studs.add(stud);
+          return stud;
         }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        student = studentRepository.save(student);
+      }).subscribeOn(Schedulers.computation());
 
-        schedulerExample(student.getId());
-        return beanMapper.map(student, Student.class, "student-1");
+      observables.add(o);
     }
 
-    @Override
-    public List<Student> add(List<Student> students)
-    {
+    Observable<Student> o4 = Observable.merge(observables);
+    o4.subscribe(new MyObserver());
 
-        MyRxJavaSchedulersHook hook = new MyRxJavaSchedulersHook();
-        RxJavaPlugins.getInstance().registerSchedulersHook(hook);
+    logger.debug("add() :: more than one student creation end");
 
-        List<Observable<Student>> observables = new ArrayList<Observable<Student>>();
+    return beanMapper.mapCollection(studs, Student.class);
+  }
 
-        final List<Student> studs = new ArrayList<Student>();
-        logger.debug("add() :: more than one student creation start");
-        for (final Student s : students)
-        {
-            Observable<Student> o = Observable.fromCallable(new Callable<Student>()
-            {
-                @Override
-                public Student call() throws Exception
-                {
-                    Student stud = add(s);
-                    studs.add(stud);
-                    return stud;
+  @Override
+  public List<Student> getByIds(List<Long> ids) {
+    List<Student> students = studentRepository.findAll(ids);
+    return beanMapper.mapCollection(students, Student.class, "student-1");
+  }
 
-                }
-            }).subscribeOn(Schedulers.computation());
+  @Override
+  public List<Student> getByCity(String city) {
+    return studentRepository.findByCity(city);
+    // return studentRepository.findAll(StudentSpecification.getStudentByName(city));
+  }
 
-            observables.add(o);
-        }
+  @Override
+  public List<Student> getByCityAndName(String city, String name) {
 
-        Observable<Student> o4 = Observable.merge(observables);
-        o4.subscribe(new MyObserver());
+    return studentRepository.findByCityAndNameLike(city, "%" + name + "%");
+    // return studentRepository.findAll(Specifications.where(StudentSpecification.getByCity(city))
+    // .and(StudentSpecification.getByName(name)));
+  }
 
-        logger.debug("add() :: more than one student creation end");
+  @Override
+  public PagedResult<Student> getAll() {
+    Sort sort = new Sort(Direction.ASC, new String[] {"name", "city", "id"});
 
-        return beanMapper.mapCollection(studs, Student.class);
+    Pageable p = new PageRequest(0, 3, sort);
+    Page<Student> students = studentRepository.findAll(p);
+
+    // Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s ->
+    // s.getCity()));
+
+    // System.out.println(map);
+
+    return beanMapper.mapCollection(students, Student.class);
+  }
+
+  @Override
+  public Student getById(Long id) {
+    Student student = studentRepository.getOne(id);
+    return beanMapper.map(student, Student.class);
+  }
+
+  @Override
+  public Student update(Long id, Student student) {
+    Student attachStudent = studentRepository.getOne(id);
+    beanMapper.map(student, attachStudent, "student-2");
+    studentRepository.save(attachStudent);
+    return attachStudent;
+  }
+
+  @Override
+  public void delete(Long id) {
+    studentRepository.delete(id);
+  }
+
+  private void schedulerExample(Long id) {
+    logger.debug("schedulerExample() :: execute");
+
+    Date timeToExecute = new Date(System.currentTimeMillis() + 60 * 1000);
+
+    JobDetail jobDetail =
+        JobBuilder.newJob(Sample.class).usingJobData("id", id).withIdentity(Sample.class.getName()).build();
+
+    // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName())
+    // .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
+
+    Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName()).startAt(timeToExecute).build();
+
+    try {
+      SchedulerFactory schedulerFactory = new StdSchedulerFactory();
+      Scheduler scheduler = schedulerFactory.getScheduler();
+      scheduler.start();
+      scheduler.scheduleJob(jobDetail, trigger);
+      logger.debug("schedulerExample() ::  schedule");
+    } catch (Exception exception) {
+      logger.debug("schedulerExample() ::  error - ", exception);
     }
-
-    @Override
-    public List<Student> getByIds(List<Long> ids)
-    {
-        List<Student> students = studentRepository.findAll(ids);
-        return beanMapper.mapCollection(students, Student.class, "student-1");
-    }
-
-    @Override
-    public List<Student> getByCity(String city)
-    {
-        return studentRepository.findByCity(city);
-        // return studentRepository.findAll(StudentSpecification.getStudentByName(city));
-    }
-
-    @Override
-    public List<Student> getByCityAndName(String city, String name)
-    {
-
-        return studentRepository.findByCityAndNameLike(city, "%" + name + "%");
-        // return studentRepository.findAll(Specifications.where(StudentSpecification.getByCity(city))
-        // .and(StudentSpecification.getByName(name)));
-    }
-
-    @Override
-    public PagedResult<Student> getAll()
-    {
-        Sort sort = new Sort(Direction.ASC, new String[]
-        { "name", "city", "id" });
-
-        Pageable p = new PageRequest(0, 3, sort);
-        Page<Student> students = studentRepository.findAll(p);
-
-        // Map<String, List<Student>> map = students.stream().collect(Collectors.groupingBy(s -> s.getCity()));
-
-        // System.out.println(map);
-
-        return beanMapper.mapCollection(students, Student.class);
-    }
-
-    @Override
-    public Student getById(Long id)
-    {
-        Student student = studentRepository.getOne(id);
-        return beanMapper.map(student, Student.class);
-    }
-
-    @Override
-    public Student update(Long id, Student student)
-    {
-        Student attachStudent = studentRepository.getOne(id);
-        beanMapper.map(student, attachStudent, "student-2");
-        studentRepository.save(attachStudent);
-        return attachStudent;
-    }
-
-    @Override
-    public void delete(Long id)
-    {
-        studentRepository.delete(id);
-    }
-
-    private void schedulerExample(Long id)
-    {
-        logger.debug("schedulerExample() :: execute");
-
-        Date timeToExecute = new Date(System.currentTimeMillis() + 60 * 1000);
-
-        JobDetail jobDetail = JobBuilder.newJob(Sample.class).usingJobData("id", id)
-                .withIdentity(Sample.class.getName()).build();
-
-        // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName())
-        // .withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).build();
-
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(Sample.class.getName()).startAt(timeToExecute)
-                .build();
-
-        try
-        {
-            SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-            Scheduler scheduler = schedulerFactory.getScheduler();
-            scheduler.start();
-            scheduler.scheduleJob(jobDetail, trigger);
-            logger.debug("schedulerExample() ::  schedule");
-        }
-        catch (Exception exception)
-        {
-            logger.debug("schedulerExample() ::  error - ", exception);
-        }
-    }
+  }
 
 }

@@ -8,7 +8,6 @@ import com.dw.practWeb.service.DBMigrationService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class DBMigrationServiceImpl implements DBMigrationService
-{
+public class DBMigrationServiceImpl implements DBMigrationService {
 
 }

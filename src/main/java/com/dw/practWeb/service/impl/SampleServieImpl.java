@@ -11,13 +11,11 @@ import com.dw.practWeb.repository.SampleRepository;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
-public class SampleServieImpl
-{
-    @Inject
-    private SampleRepository sampleRepository;
+public class SampleServieImpl {
+  @Inject
+  private SampleRepository sampleRepository;
 
-    public Sample add(Sample sample)
-    {
-        return sampleRepository.save(sample);
-    }
+  public Sample add(Sample sample) {
+    return sampleRepository.save(sample);
+  }
 }

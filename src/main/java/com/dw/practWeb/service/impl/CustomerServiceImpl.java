@@ -13,21 +13,19 @@ import com.dw.practWeb.utils.BeanMapper;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class CustomerServiceImpl implements CustomerService
-{
+public class CustomerServiceImpl implements CustomerService {
 
-    @Inject
-    private CustomerRepository customerRepository;
-    
-    @Inject
-    private BeanMapper beanMapper;
-    
-    @Override
-    public Customer create(Customer customer)
-    {
-        //customer.setCreated(new Date());
-        Customer cust = customerRepository.save(customer);
+  @Inject
+  private CustomerRepository customerRepository;
 
-        return beanMapper.map(cust, Customer.class, "customer-1");
-    }
+  @Inject
+  private BeanMapper beanMapper;
+
+  @Override
+  public Customer create(Customer customer) {
+    // customer.setCreated(new Date());
+    Customer cust = customerRepository.save(customer);
+
+    return beanMapper.map(cust, Customer.class, "customer-1");
+  }
 }
