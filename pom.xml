@@ -164,6 +164,13 @@
             <version>1.2.2</version>
         </dependency>
 
+        <!-- CouchDB -->
+        <dependency>
+            <groupId>org.ektorp</groupId>
+            <artifactId>org.ektorp.spring</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>practWeb</finalName>

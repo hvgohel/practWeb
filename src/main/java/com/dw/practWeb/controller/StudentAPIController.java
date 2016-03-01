@@ -151,8 +151,6 @@ public class StudentAPIController extends BaseAPIController {
   @ResponseStatus(value = HttpStatus.NO_CONTENT)
   public void fileExample(@RequestParam(value = "file") MultipartFile[] multipartFiles)
       throws IllegalStateException, IOException {
-    logger.debug("{}", appConfig.getTest());
-
     List<File> files = new ArrayList<File>();
     for (MultipartFile m : multipartFiles) {
       files.add(getFile(m));
