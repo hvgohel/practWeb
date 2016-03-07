@@ -27,6 +27,7 @@ public class JavaMailSenderFactory {
     mailSender.setPort(Integer.valueOf(smtpProperties.getProperty("smtp.port")));
     mailSender.setUsername(smtpProperties.getProperty("smtp.userName"));
     mailSender.setPassword(smtpProperties.getProperty("smtp.password"));
+    
 
     Properties javaMailProperties = new Properties();
     javaMailProperties.put("mail.smtp.auth", smtpProperties.getProperty("smtp.authentication"));

@@ -83,6 +83,10 @@ public class EmailSender {
     message.setFrom("jaydeep@gmail.com");
     message.setTo("jaydeepkumbhani.dream@gmail.com");
     message.setReplyTo("jaydeepkumbhani.dream@gmail.com");
+    
+    message.setSubject("Testing Email");
+    message.setHtml("This is testing mail");
+    message.setText("This is testing mail");
 
 //    String subject = templateEngine.mergeTemplate(emailConfig.getSubject(), formSubmission.getFormSubmissionIntoMap(),
 //        "adminEmailSubject");
