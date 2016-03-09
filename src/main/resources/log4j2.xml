@@ -35,10 +35,10 @@
             <appender-ref ref="Console" />
         </root>
 
-        <logger name="org.springframework" level="DEBUG" />
+    <!-- <logger name="org.springframework" level="DEBUG" /> -->
 
-        <logger name="org.hibernate" level="ERROR" />
-        <logger name="org.hibernate.type" level="ERROR" />
+    <!-- <logger name="org.hibernate" level="ERROR" /> -->
+    <!-- <logger name="org.hibernate.type" level="ERROR" /> -->
 
         <logger name="com.dw.practWeb" level="DEBUG" />
         <logger name="db.migration" level="DEBUG" />

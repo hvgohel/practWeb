@@ -23,16 +23,6 @@ import com.dw.practWeb.repository.RegistrationRepository;
 public class RegisteredUserDetailsServiceImpl implements UserDetailsService {
   private static Logger logger = LoggerFactory.getLogger(RegisteredUserDetailsServiceImpl.class);
 
-  private Long id;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   @Inject
   private RegistrationRepository registrationRepository;
 

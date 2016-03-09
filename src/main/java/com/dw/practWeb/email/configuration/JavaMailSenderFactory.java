@@ -23,7 +23,7 @@ public class JavaMailSenderFactory {
 
     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-    mailSender.setHost(smtpProperties.getProperty("smtp.mailgun.org"));
+    mailSender.setHost(smtpProperties.getProperty("smtp.host"));
     mailSender.setPort(Integer.valueOf(smtpProperties.getProperty("smtp.port")));
     mailSender.setUsername(smtpProperties.getProperty("smtp.userName"));
     mailSender.setPassword(smtpProperties.getProperty("smtp.password"));
