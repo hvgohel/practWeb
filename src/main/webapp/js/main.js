@@ -54,8 +54,7 @@ $("img").error(function() {
 
 });
 
-
-//signup bution
+// signup bution
 $('#signupCustomer').click(function() {
     addCustomer();
     return false;
@@ -63,14 +62,14 @@ $('#signupCustomer').click(function() {
 
 function addCustomer() {
     var signupData = {
-            firstName : $('#fname').val(),
-            lastName : $('#lname').val(),
-            registration : {
-                password : $('#password').val(),
-                userName : $('#userName').val(),
-            }
-        };
-    
+        firstName : $('#fname').val(),
+        lastName : $('#lname').val(),
+        registration : {
+            password : $('#password').val(),
+            userName : $('#userName').val(),
+        }
+    };
+
     console.log('addCustomer');
     $.ajax({
         type : 'POST',
@@ -104,7 +103,7 @@ function findAll() {
     console.log('findAll');
     $.ajax({
         type : 'GET',
-        url : rootURL + '/student',
+        url : '/students',
         dataType : "json", // data type of response
         success : renderList
     });

@@ -5,29 +5,38 @@
 <html>
 <head>
 <title>login</title>
+<link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <c:if test="${param.error ne null}">
-        <div>Invalid username and password.</div>
-    </c:if>
-    <c:if test="${param.logout ne null}">
-        <div>You have been logged out.</div>
-    </c:if>
-    <form action="/login" method="post">
-        <div>
-            <label> User Name : <input type="text" name="username" />
-            </label>
-        </div>
-        <div>
-            <label> Password: <input type="password" name="password" />
-            </label>
-        </div>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <div>
-            <input type="submit" value="Sign In" /> <input type="button" value="Sign Up">
-        </div>
-    </form>
+    <div align="center">
+        <form action="/login" method="post" class="login-form">
+            <table>
+                <tr>
+                    <th colspan="2" class="login-header">Login here</th>
+                </tr>
+                <tr>
+                    <td>User Name</td>
+                    <td><input type="text" name="username" placeholder="UserName" required="required" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password" placeholder="Password" required="required" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Login</button></td>
+                </tr>
+            </table>
 
+
+            <c:if test="${param.error ne null}">
+                <div>Invalid username and password.</div>
+            </c:if>
+            <c:if test="${param.logout ne null}">
+                <div align="center" style="color: red">You have been logged out.</div>
+            </c:if>
+        </form>
+    </div>
     <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/main.js"></script>
 </body>

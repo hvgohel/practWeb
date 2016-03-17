@@ -20,7 +20,7 @@ public interface StudentService {
 
   List<Student> getByCityAndName(String city, String name);
 
-  @PreAuthorize("hasAnyRole('ROLE_USER')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   PagedResult<Student> getAll();
 
   Student getById(Long id);

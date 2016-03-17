@@ -7,6 +7,7 @@ public class WebConfig {
   public static final String UPDATE_STUDENT = "/test/student/{id}"; // PATCH
   public static final String DELETE_STUDENT = "/test/student/{id}"; // DELETE
   public static final String GET_STUDENT = "/test/student"; // GET
+  public static final String GET_STUDENTS = "/students"; // GET
   public static final String GET_STUDENT_BY_IDS = "/test/students"; // GET
   public static final String GET_STUDENT_BY_ID = "/test/student/{id}"; // GET
   public static final String GET_STUDENTS_BY_CITY = "/test/{city}/students"; // GET

@@ -29,6 +29,7 @@ import com.dw.practWeb.config.WebConfig;
 import com.dw.practWeb.model.Sample;
 import com.dw.practWeb.model.Student;
 import com.dw.practWeb.paging.PagedResult;
+import com.dw.practWeb.repository.StudentRepository;
 import com.dw.practWeb.security.SecurityServiceHelper;
 import com.dw.practWeb.service.SecurityRegisteredUserManager;
 import com.dw.practWeb.service.StudentService;
@@ -43,6 +44,9 @@ public class StudentAPIController extends BaseAPIController {
 
   @Inject
   private StudentService studentService;
+
+  @Inject
+  private StudentRepository studentRepository;
 
   @Inject
   private SecurityRegisteredUserManager securityRegisteredUserManager;
@@ -95,6 +99,13 @@ public class StudentAPIController extends BaseAPIController {
   @ResponseBody
   public PagedResult<Student> get() {
     return studentService.getAll();
+  }
+
+  @RequestMapping(value = WebConfig.GET_STUDENTS, method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public List<Student> getAll() {
+    return studentRepository.findAll();
   }
 
   @RequestMapping(value = WebConfig.GET_STUDENT_BY_ID, method = RequestMethod.GET,
