@@ -10,6 +10,7 @@ import com.dw.practWeb.paging.PagedResult;
 
 @Service
 public interface StudentService {
+  @PreAuthorize("hasRole('ROLE_USER')")
   Student add(Student student);
 
   List<Student> add(List<Student> students);
