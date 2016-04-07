@@ -6,6 +6,6 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:student")
+@CucumberOptions(format = "pretty", features = "classpath:student", tags = "@example, @example2")
 public class StudentTest {
 }

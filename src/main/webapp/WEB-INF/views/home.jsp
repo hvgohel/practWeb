@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hello World!</title>
+<title>home</title>
 </head>
 <body>
     <a href="index">Go Index</a>
