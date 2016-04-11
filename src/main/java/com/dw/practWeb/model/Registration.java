@@ -55,4 +55,12 @@ public class Registration extends BaseModel {
       return "ROLE_" + name();
     }
   }
+
+  // boolean hasRole(Role role) {
+  // return this.getRole().contain(role);
+  // }
+
+  public boolean hasOnlyRole(Role role) {
+    return this.role.equals(role);
+  }
 }

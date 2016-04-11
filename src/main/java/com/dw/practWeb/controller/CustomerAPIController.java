@@ -2,8 +2,7 @@ package com.dw.practWeb.controller;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +18,12 @@ import com.dw.practWeb.service.CustomerService;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class CustomerAPIController {
-  
-  @Inject
+public class CustomerAPIController extends BaseAPIController {
+
+  @Autowired
   private CustomerService customerService;
-  
-  @Inject
+
+  @Autowired
   private EmailSender emailSender;
 
   @RequestMapping(value = WebConfig.CREATE_CUSTOMER, method = RequestMethod.POST,
@@ -32,9 +31,8 @@ public class CustomerAPIController {
   public Customer create(@RequestBody Customer customer) {
     return customerService.create(customer);
   }
-  
-  @RequestMapping(value = "/data/sent/email", method = RequestMethod.GET,
-      produces = MediaType.APPLICATION_JSON_VALUE)
+
+  @RequestMapping(value = "/data/sent/email", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public void sendEmail() throws IOException {
     emailSender.sendEmail();
   }

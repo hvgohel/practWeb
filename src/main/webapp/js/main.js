@@ -1,11 +1,9 @@
 // The root URL for the RESTful services
-var rootURL = "http://localhost:8080/test";
-
-var baseURL = "http://localhost:8080";
+var rootURL = "/test";
 
 var student;
 
-// Retrieve wine list when application starts
+// Retrieve student list when application starts
 findAll();
 
 // Nothing to delete in initial application state
@@ -41,6 +39,7 @@ $('#btnSave').click(function() {
 
 $('#btnDelete').click(function() {
     deleteStudent();
+    location.reload();
     return false;
 });
 
@@ -54,7 +53,7 @@ $("img").error(function() {
 
 });
 
-// signup bution
+// signup button
 $('#signupCustomer').click(function() {
     addCustomer();
     return false;
@@ -74,14 +73,16 @@ function addCustomer() {
     $.ajax({
         type : 'POST',
         contentType : 'application/json',
-        url : baseURL + '/data/customer',
+        url : '/data/customer',
         dataType : "json",
         data : JSON.stringify(signupData),
         success : function(data, textStatus, jqXHR) {
             alert('customer signup successfully');
+            window.location = "/login"
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            alert('customer signup error: ' + textStatus);
+            var e = JSON.parse(jqXHR.responseText);
+            alert(e.message);
         }
     });
 }
@@ -144,11 +145,13 @@ function addStudent() {
         data : formToJSON(),
         success : function(data, textStatus, jqXHR) {
             alert('student added successfully');
+            location.reload();
             $('#btnDelete').show();
             $('#id').val(data.id);
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            alert('addStudent error: ' + textStatus);
+            var e = JSON.parse(jqXHR.responseText);
+            alert(e.message);
         }
     });
 }
@@ -163,15 +166,17 @@ function updateStudent() {
         data : formToJSON(),
         success : function(data, textStatus, jqXHR) {
             alert('student info updated successfully');
+            location.reload();
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            alert('updateStudent error: ' + textStatus);
+            var e = JSON.parse(jqXHR.responseText);
+            alert(e.message);
         }
     });
 }
 
 function deleteStudent() {
-    console.log('deleteWine');
+    console.log('deleteStudent');
     $.ajax({
         type : 'DELETE',
         url : rootURL + '/student/' + $('#id').val(),
@@ -179,7 +184,8 @@ function deleteStudent() {
             alert('student info deleted successfully');
         },
         error : function(jqXHR, textStatus, errorThrown) {
-            alert('deleteStudent error');
+            var e = JSON.parse(jqXHR.responseText);
+            alert(e.message);
         }
     });
 }

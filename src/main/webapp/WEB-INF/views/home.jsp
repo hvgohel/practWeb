@@ -7,13 +7,11 @@
 <title>home</title>
 </head>
 <body>
-    <a href="index">Go Index</a>
-    <h1>${msg}
-        <b><c:out value="${pageContext.request.remoteUser}" /></b>
-    </h1>
-    <form action="/logout" method="post">
-        <input type="submit" value="Sign Out" /> <input type="hidden" name="${_csrf.parameterName}"
-            value="${_csrf.token}" />
-    </form>
+    <jsp:include page="header.jsp"></jsp:include>
+    <div class="content">
+        <div class="leftArea"></div>
+        <div class="rightArea" align="center"></div>
+    </div>
+    <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

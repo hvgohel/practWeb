@@ -7,7 +7,7 @@
 </head>
 <body>
     <div align="center">
-        <form id="signup" class="login-form">
+        <form id="signup" class="login-form" action="/login">
             <table>
                 <tr>
                     <td colspan="2" class="login-header">SignUp</td>
@@ -32,7 +32,10 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button id=signupCustomer name="signupCustomer" type="submit">Register</button></td>
+                    <td><button id=signupCustomer name="signupCustomer" type="submit">Register</button>
+                        <button>
+                            <a href="/login">Cancel</a>
+                        </button></td>
                 </tr>
             </table>
         </form>

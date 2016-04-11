@@ -24,11 +24,12 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button type="submit" name="login">Login</button></td>
+                    <td><button type="submit" name="login">Login</button>
+                        <button>
+                            <a href="/signup">SignUp</a>
+                        </button></td>
                 </tr>
             </table>
-
-
             <c:if test="${param.error ne null}">
                 <div>Invalid username and password.</div>
             </c:if>

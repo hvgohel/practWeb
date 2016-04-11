@@ -57,7 +57,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     if (isUser) {
       return "/home";
     } else if (isAdmin) {
-      return "/index";
+      return "/admin";
     } else {
       throw new IllegalStateException();
     }

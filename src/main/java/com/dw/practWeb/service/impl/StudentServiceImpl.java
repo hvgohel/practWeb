@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javax.inject.Inject;
-
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -16,6 +15,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dw.practWeb.exception.IllegalArgumentException;
 import com.dw.practWeb.model.MyObserver;
 import com.dw.practWeb.model.MyRxJavaSchedulersHook;
 import com.dw.practWeb.model.Student;
@@ -42,10 +43,10 @@ import rx.schedulers.Schedulers;
 @Transactional(propagation = Propagation.MANDATORY)
 public class StudentServiceImpl implements StudentService {
 
-  @Inject
+  @Autowired
   private StudentRepository studentRepository;
 
-  @Inject
+  @Autowired
   private BeanMapper beanMapper;
 
   private Logger logger = LoggerFactory.getLogger(StudentService.class);
@@ -53,15 +54,31 @@ public class StudentServiceImpl implements StudentService {
   @Override
   public Student add(Student student) {
     logger.debug("add() :: start");
-    try {
-      Thread.sleep(5000L);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+
+    validateStudent(student);
+    // try {
+    // Thread.sleep(5000L);
+    // } catch (InterruptedException e) {
+    // e.printStackTrace();
+    // }
     student = studentRepository.save(student);
 
     schedulerExample(student.getId());
     return beanMapper.map(student, Student.class, "student-1");
+  }
+
+  private void validateStudent(Student student) {
+    if (student == null) {
+      throw new IllegalArgumentException("student object should not be null");
+    }
+
+    if (StringUtils.isBlank(student.getName())) {
+      throw new IllegalArgumentException("Student name should not be null,empty or white-space");
+    }
+
+    if (StringUtils.isBlank(student.getCity())) {
+      throw new IllegalArgumentException("Student city should not be null,empty or white-space");
+    }
   }
 
   @Override
