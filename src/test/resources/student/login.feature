@@ -7,8 +7,8 @@ Feature: Login functionality
 
   Scenario: Login successfully
     When I am login with valid detail
-      | Fields   | Value |
-      | username | Login |
+      | Fields   | Value    |
+      | username | Login    |
       | password | password |
     Then I check user is logged in
 

@@ -25,13 +25,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers("/home").hasRole(Registration.Role.USER.name()).antMatchers("/admin")
+    // @formatter:off
+    http.authorizeRequests()
+        .antMatchers("/home")
+        .hasRole(Registration.Role.USER.name())
+        .antMatchers("/admin")
         .hasRole(Registration.Role.ADMIN.name())
         // .antMatchers("/signup").permitAll()
         // .antMatchers("/", "/welcome").permitAll()
-        .anyRequest().permitAll().and().csrf().disable().formLogin().loginPage("/login").successHandler(success)
-        .permitAll().and().exceptionHandling().accessDeniedPage("/accessDenied");
-
+        .anyRequest().permitAll()
+        .and()
+        .csrf().disable()
+        .formLogin()
+        .loginPage("/login")
+        .successHandler(success)
+        .permitAll()
+        .and()
+        .exceptionHandling()
+        .accessDeniedPage("/accessDenied");
+    // @formatter:on
   }
 
   @Inject
