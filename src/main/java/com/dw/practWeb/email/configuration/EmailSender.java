@@ -80,7 +80,7 @@ public class EmailSender {
     logger.debug("createAdminMessage() :: Creating message for admin email.");
     
     Message message = new Message();
-    message.setFrom("jaydeep@gmail.com");
+    message.setFrom("hvgohel45@gmail.com");
     message.setTo("jaydeepkumbhani.dream@gmail.com");
     message.setReplyTo("jaydeepkumbhani.dream@gmail.com");
     

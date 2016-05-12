@@ -8,8 +8,8 @@ Feature: Login functionality
   Scenario: Login successfully
     When I am login with valid detail
       | Fields   | Value |
-      | username | hiren |
-      | password | hiren |
+      | username | Login |
+      | password | password |
     Then I check user is logged in
 
   Scenario: Login Failed

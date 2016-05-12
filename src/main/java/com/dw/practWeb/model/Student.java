@@ -20,15 +20,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  Long id;
+  private Long id;
 
-  String name;
+  private String name;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "`dateofbirth`")
-  Date dateOfBirth;
+  private Date dateOfBirth;
 
-  String city;
+  private String city;
 
   public Long getId() {
     return id;
