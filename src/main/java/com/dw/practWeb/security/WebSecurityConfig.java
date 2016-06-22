@@ -35,14 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // .antMatchers("/", "/welcome").permitAll()
         .anyRequest().permitAll()
         .and()
-        .csrf().disable()
+          .csrf().disable()
         .formLogin()
-        .loginPage("/login")
-        .successHandler(success)
-        .permitAll()
+          .loginPage("/login")
+          .successHandler(success)
+          .permitAll()
         .and()
         .exceptionHandling()
-        .accessDeniedPage("/accessDenied");
+          .accessDeniedPage("/accessDenied");
     // @formatter:on
   }
 
