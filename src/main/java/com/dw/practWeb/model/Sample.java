@@ -1,26 +1,24 @@
 package com.dw.practWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
-
 @Entity
 @Table(name = "sample")
-@JsonSerialize(include = Inclusion.NON_NULL)
-public class Sample extends Base<String>
-{
-    private String name;
+@JsonInclude(value = Include.NON_NULL)
+public class Sample extends Base<String> {
+  private static final long serialVersionUID = 1L;
+  private String name;
 
-    public String getName()
-    {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
 }

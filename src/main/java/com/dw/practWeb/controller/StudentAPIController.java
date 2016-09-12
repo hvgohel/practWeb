@@ -28,123 +28,97 @@ import com.dw.practWeb.service.impl.SampleServieImpl;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class StudentAPIController
-{
-    @Inject
-    private StudentService                studentService;
+public class StudentAPIController {
+  @Inject
+  private StudentService studentService;
 
-    @Inject
-    private SecurityRegisteredUserManager securityRegisteredUserManager;
+  @Inject
+  private SecurityRegisteredUserManager securityRegisteredUserManager;
 
-    @Inject
-    private SecurityServiceHelper         securityServiceHelper;
+  @Inject
+  private SecurityServiceHelper securityServiceHelper;
 
-    @Inject
-    private SampleServieImpl sampleServieImpl;
-    
-    @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Student add(@RequestBody Student student)
-    {
-        return studentService.add(student);
-    }
+  @Inject
+  private SampleServieImpl sampleServieImpl;
 
-    @RequestMapping(value = WebConfig.CREATE_STUDENTS, method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<Student> add(@RequestBody List<Student> students)
-    {
-        return studentService.add(students);
-    }
+  @RequestMapping(value = WebConfig.CREATE_STUDENT, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Student add(@RequestBody Student student) {
+    return studentService.add(student);
+  }
 
-    @RequestMapping(value = WebConfig.UPDATE_STUDENT, method = RequestMethod.PATCH,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Student update(@PathVariable(value = "id") Long id, @RequestBody Student student)
-    {
-        return studentService.update(id, student);
-    }
+  @RequestMapping(value = WebConfig.CREATE_STUDENTS, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public List<Student> add(@RequestBody List<Student> students) {
+    return studentService.add(students);
+  }
 
-    @RequestMapping(value = WebConfig.DELETE_STUDENT, method = RequestMethod.DELETE,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable(value = "id") Long id)
-    {
-        studentService.delete(id);
-    }
+  @RequestMapping(value = WebConfig.UPDATE_STUDENT, method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Student update(@PathVariable(value = "id") Long id, @RequestBody Student student) {
+    return studentService.update(id, student);
+  }
 
-    @RequestMapping(value = WebConfig.GET_STUDENT_BY_IDS, method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<Student> get(@RequestParam(value = "id") List<Long> ids)
-    {
-        return studentService.getByIds(ids);
-    }
+  @RequestMapping(value = WebConfig.DELETE_STUDENT, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public void update(@PathVariable(value = "id") Long id) {
+    studentService.delete(id);
+  }
 
-    @RequestMapping(value = WebConfig.GET_STUDENT, method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public PagedResult<Student> get()
-    {
-        return studentService.getAll();
-    }
+  @RequestMapping(value = WebConfig.GET_STUDENT_BY_IDS, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public List<Student> get(@RequestParam(value = "id") List<Long> ids) {
+    return studentService.getByIds(ids);
+  }
 
-    @RequestMapping(value = WebConfig.GET_STUDENT_BY_ID, method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Student getById(@PathVariable(value = "id") String id)
-    {
-        return studentService.getById(Long.valueOf(id.toString()));
-    }
+  @RequestMapping(value = WebConfig.GET_STUDENT, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public PagedResult<Student> get() {
+    return studentService.getAll();
+  }
 
-    @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY, method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<Student> getByCity(@PathVariable(value = "city") String city)
-    {
-        return studentService.getByCity(city);
-    }
+  @RequestMapping(value = WebConfig.GET_STUDENT_BY_ID, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Student getById(@PathVariable(value = "id") String id) {
+    return studentService.getById(Long.valueOf(id.toString()));
+  }
 
-    @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY_AND_NAME, method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<Student> getByCityAndName(@RequestParam(value = "city") String city,
-                                          @RequestParam(value = "name") String name)
-    {
-        return studentService.getByCityAndName(city, name);
-    }
+  @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public List<Student> getByCity(@PathVariable(value = "city") String city) {
+    return studentService.getByCity(city);
+  }
 
-    @RequestMapping(value = "/test/getuser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Long getUser()
-    {
-        Long regId = securityRegisteredUserManager.getCurrentRegisteredUserId();
-        return regId;
-    }
+  @RequestMapping(value = WebConfig.GET_STUDENTS_BY_CITY_AND_NAME, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public List<Student> getByCityAndName(@RequestParam(value = "city") String city,
+      @RequestParam(value = "name") String name) {
+    return studentService.getByCityAndName(city, name);
+  }
 
-    @RequestMapping(value = "/login/withUserName", method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void loginWithUser(@RequestParam(value = "username") String userName)
-    {
-        securityServiceHelper.loginAsUser(userName);
-        System.out.println("user has been successfully login");
-    }
+  @RequestMapping(value = "/test/getuser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Long getUser() {
+    Long regId = securityRegisteredUserManager.getCurrentRegisteredUserId();
+    return regId;
+  }
 
-    @RequestMapping(value = "/login/withSystem", method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void loginWithSystem()
-    {
-        securityServiceHelper.loginAsSystem();
-        System.out.println("system has been successfully login");
-    }
+  @RequestMapping(value = "/login/withUserName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void loginWithUser(@RequestParam(value = "username") String userName) {
+    securityServiceHelper.loginAsUser(userName);
+    System.out.println("user has been successfully login");
+  }
 
-    @RequestMapping(value = "/sample", method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Sample createSample(@RequestBody Sample sample)
-    {
-        return sampleServieImpl.add(sample);
-    }
+  @RequestMapping(value = "/login/withSystem", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void loginWithSystem() {
+    securityServiceHelper.loginAsSystem();
+    System.out.println("system has been successfully login");
+  }
+
+  @RequestMapping(value = "/sample", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public Sample createSample(@RequestBody Sample sample) {
+    return sampleServieImpl.add(sample);
+  }
 }

@@ -7,33 +7,28 @@ import com.dw.practWeb.repository.StudentRepository;
 import com.dw.practWeb.service.StudentService;
 
 @Named
-public class BeanUtils
-{
-    private static BeanUtils  bOnly;
+public class BeanUtils {
+  private static BeanUtils bOnly;
 
-    @Inject
-    private StudentRepository studentRepository;
-    
-    @Inject
-    private StudentService studentService;
+  @Inject
+  private StudentRepository studentRepository;
 
-    public BeanUtils()
-    {
-        bOnly = this;
-    }
+  @Inject
+  private StudentService studentService;
 
-    public static BeanUtils only()
-    {
-        return bOnly;
-    }
+  public BeanUtils() {
+    bOnly = this;
+  }
 
-    public StudentRepository getStudentRepository()
-    {
-        return studentRepository;
-    }
-    
-    public StudentService getStudentService()
-    {
-        return studentService;
-    }
+  public static BeanUtils only() {
+    return bOnly;
+  }
+
+  public StudentRepository getStudentRepository() {
+    return studentRepository;
+  }
+
+  public StudentService getStudentService() {
+    return studentService;
+  }
 }

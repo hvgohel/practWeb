@@ -2,9 +2,8 @@ package com.dw.practWeb.service;
 
 import com.dw.practWeb.model.Registration;
 
-public interface SecurityRegisteredUserManager
-{
-    Long getCurrentRegisteredUserId();
+public interface SecurityRegisteredUserManager {
+  Long getCurrentRegisteredUserId();
 
-    Registration get(String email);
+  Registration get(String email);
 }

@@ -9,6 +9,4 @@ import com.dw.practWeb.model.Registration;
 
 @RestController
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class RegistrationAPIController
-{
-}
+public class RegistrationAPIController {}
