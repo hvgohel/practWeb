@@ -1,12 +1,11 @@
 package com.dw.practWeb.security;
 
-import java.util.List;
-
-import javax.inject.Inject;
+import com.dw.practWeb.model.Registration;
+import com.dw.practWeb.model.Registration.Role;
+import com.dw.practWeb.service.SecurityRegisteredUserManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -15,80 +14,75 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.dw.practWeb.model.Registration;
-import com.dw.practWeb.model.Registration.Role;
-import com.dw.practWeb.service.SecurityRegisteredUserManager;
+import java.util.List;
 
-/**
- *
- */
+import javax.inject.Inject;
+
 @Component(value = "securityServiceHelper")
 public class SecurityServiceHelperImpl implements SecurityServiceHelper {
-    
-    private static Logger logger = LoggerFactory.getLogger(SecurityServiceHelperImpl.class);
 
-    @Inject
-    private UserDetailsService registeredUserDetailsService;
+  private static Logger logger = LoggerFactory.getLogger(SecurityServiceHelperImpl.class);
 
-    @Inject
-    private SecurityRegisteredUserManager securityRegisteredUserManager;
+  @Inject
+  private UserDetailsService registeredUserDetailsService;
 
-    private String systemUserEmail = "system";
+  @Inject
+  private SecurityRegisteredUserManager securityRegisteredUserManager;
 
-    public void loginAsSystem() {
+  private String systemUserEmail = "system";
 
-        if (systemUserEmail == null) {
-            throw new IllegalArgumentException("System email not found in configuration.!");
-        }
-        logger.debug("Logging in as system user {}", systemUserEmail);
-        try {
-            SecurityUser securityUser = null;
-            Registration registration = securityRegisteredUserManager.get(systemUserEmail);
+  public void loginAsSystem() {
 
-            if (registration != null) {
+    if (systemUserEmail == null) {
+      throw new IllegalArgumentException("System email not found in configuration.!");
+    }
+    logger.debug("Logging in as system user {}", systemUserEmail);
+    try {
+      SecurityUser securityUser = null;
+      Registration registration = securityRegisteredUserManager.get(systemUserEmail);
 
-                securityUser =
-                        new SecurityUser(registration.getUserName(), registration.getPassword(),
-                                RegisteredUserDetailsServiceImpl.getRoleBasedAuthorities(registration));
-                securityUser.setId(registration.getId());
+      if (registration != null) {
 
-                SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), securityUser
-                                .getAuthorities()));
-                logger.debug("Logged in as system user {}", systemUserEmail);
-                return;
-            }
-        } catch (Exception e) {
-            logger.error("loadUserByUsername:: failed", e);
-        }
+        securityUser = new SecurityUser(registration.getUserName(), registration.getPassword(),
+            RegisteredUserDetailsServiceImpl.getRoleBasedAuthorities(registration));
+        securityUser.setId(registration.getId());
 
-        throw new UsernameNotFoundException("Failed to find username in database: " + systemUserEmail);
+        SecurityContextHolder.getContext()
+            .setAuthentication(new UsernamePasswordAuthenticationToken(securityUser,
+                securityUser.getPassword(), securityUser.getAuthorities()));
+        logger.debug("Logged in as system user {}", systemUserEmail);
+        return;
+      }
+    } catch (Exception e) {
+      logger.error("loadUserByUsername:: failed", e);
     }
 
-    public void loginAsUser(String email) {
-        logger.debug("loginAsUser:: email : {}", email);
-        SecurityUser user = (SecurityUser) registeredUserDetailsService.loadUserByUsername(email);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
-    }
+    throw new UsernameNotFoundException("Failed to find username in database: " + systemUserEmail);
+  }
 
-    // Requires a user to be created
-    public void loginAsRole(String role) {
-        List<GrantedAuthority> authorities
-                = AuthorityUtils.createAuthorityList(role);
-        SecurityUser user = new SecurityUser("testuser@test.com", "name", authorities);
-        user.setId(1L);
+  public void loginAsUser(String email) {
+    logger.debug("loginAsUser:: email : {}", email);
+    SecurityUser user = (SecurityUser) registeredUserDetailsService.loadUserByUsername(email);
+    SecurityContextHolder.getContext().setAuthentication(
+        new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+  }
 
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities));
-    }
+  // Requires a user to be created
+  public void loginAsRole(String role) {
+    List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(role);
+    SecurityUser user = new SecurityUser("testuser@test.com", "name", authorities);
+    user.setId(1L);
 
-    public void loginAsRole(Role role) {
-        loginAsRole(role.toString());
-    }
+    SecurityContextHolder.getContext().setAuthentication(
+        new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities));
+  }
 
-    public void logout() {
-        logger.debug("logout() :: current user is logged out");
-        SecurityContextHolder.getContext().setAuthentication(null);
-    }
+  public void loginAsRole(Role role) {
+    loginAsRole(role.toString());
+  }
+
+  public void logout() {
+    logger.debug("logout() :: current user is logged out");
+    SecurityContextHolder.getContext().setAuthentication(null);
+  }
 }

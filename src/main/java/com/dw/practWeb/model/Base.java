@@ -40,6 +40,7 @@ public class Base<K extends Comparable> implements Serializable, Comparable<Obje
     this.created = created;
   }
 
+  @SuppressWarnings("unchecked")
   @PrePersist
   public void setEntityId() {
     this.created = new Date();
@@ -56,15 +57,20 @@ public class Base<K extends Comparable> implements Serializable, Comparable<Obje
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
 
     Base<?> other = (Base<?>) obj;
 
     if (id == null) {
-      if (other.id != null) return false;
-    } else if (!id.equals(other.id)) return false;
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
     return true;
   }
 

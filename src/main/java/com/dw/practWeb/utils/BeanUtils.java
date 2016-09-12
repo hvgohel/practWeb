@@ -1,10 +1,10 @@
 package com.dw.practWeb.utils;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.dw.practWeb.repository.StudentRepository;
 import com.dw.practWeb.service.StudentService;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 public class BeanUtils {

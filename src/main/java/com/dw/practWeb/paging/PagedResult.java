@@ -4,17 +4,11 @@ import java.util.List;
 
 public class PagedResult<T> {
   private List<T> results;
-
   private Integer rpp;
-
   private Integer pageNo;
-
   private String sortOrder;
-
   private String sortOn;
-
   private Long totalResults;
-
   private Integer totalPage;
 
   public PagedResult() {}

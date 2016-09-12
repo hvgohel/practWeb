@@ -1,16 +1,15 @@
 package com.dw.practWeb.specification;
 
+import com.dw.practWeb.model.Student;
+import com.dw.practWeb.model.Student_;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.loader.custom.Return;
-import org.springframework.data.jpa.domain.Specification;
-
-import com.dw.practWeb.model.Student;
-import com.dw.practWeb.model.Student_;
 
 public class StudentSpecification {
   public static Specification<Student> getByCity(final String city) {

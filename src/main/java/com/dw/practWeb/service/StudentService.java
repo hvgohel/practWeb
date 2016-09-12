@@ -1,12 +1,12 @@
 package com.dw.practWeb.service;
 
-import java.util.List;
+import com.dw.practWeb.model.Student;
+import com.dw.practWeb.paging.PagedResult;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.dw.practWeb.model.Student;
-import com.dw.practWeb.paging.PagedResult;
+import java.util.List;
 
 @Service
 public interface StudentService {

@@ -1,11 +1,11 @@
 package com.dw.practWeb;
 
+import com.dw.practWeb.service.StudentService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.dw.practWeb.service.StudentService;
 
 @SpringBootApplication
 public class PractWebApplication {

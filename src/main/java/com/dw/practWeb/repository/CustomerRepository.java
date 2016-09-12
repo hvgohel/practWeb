@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.dw.practWeb.model.Customer;
 
 public interface CustomerRepository
-    extends
-      JpaRepository<Customer, Long>,
-      JpaSpecificationExecutor<Customer> {}
+    extends JpaRepository<Customer, Long>, JpaSpecificationExecutor<Customer> {
+}

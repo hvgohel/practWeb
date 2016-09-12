@@ -1,8 +1,8 @@
 package com.dw.practWeb.service;
 
-import org.springframework.stereotype.Service;
-
 import com.dw.practWeb.model.Customer;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {

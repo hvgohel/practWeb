@@ -1,11 +1,7 @@
 package com.dw.practWeb.utils.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import com.dw.practWeb.paging.PagedResult;
+import com.dw.practWeb.utils.BeanMapper;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
@@ -15,8 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 
-import com.dw.practWeb.paging.PagedResult;
-import com.dw.practWeb.utils.BeanMapper;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 public class BeanMapperImpl extends DozerBeanMapper implements BeanMapper {
