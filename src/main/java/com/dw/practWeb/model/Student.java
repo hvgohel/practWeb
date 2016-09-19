@@ -3,6 +3,8 @@ package com.dw.practWeb.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "student")
@@ -20,16 +23,17 @@ import javax.persistence.TemporalType;
 public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  Long id;
+  private Long id;
 
-  String name;
+  private String name;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "`dateofbirth`")
-  Date dateOfBirth;
+  private Date dateOfBirth;
 
-  String city;
+  private String city;
 
+  @NotNull
   public Long getId() {
     return id;
   }
@@ -38,6 +42,7 @@ public class Student {
     this.id = id;
   }
 
+  @NotBlank
   public String getName() {
     return name;
   }
@@ -46,6 +51,7 @@ public class Student {
     this.name = name;
   }
 
+  @NotBlank
   public String getCity() {
     return city;
   }
@@ -54,6 +60,7 @@ public class Student {
     this.city = city;
   }
 
+  @NotNull
   public Date getDateOfBirth() {
     return dateOfBirth;
   }
@@ -61,5 +68,4 @@ public class Student {
   public void setDateOfBirth(Date dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
-
 }

@@ -12,8 +12,7 @@ public class PractWebApplication {
   private static Logger logger = LoggerFactory.getLogger(StudentService.class);
 
   public static void main(String[] args) {
-    logger.debug("main() :: application start");
     SpringApplication.run(PractWebApplication.class, args);
-    logger.debug("main() :: application end");
+    logger.debug("main() :: application start");
   }
 }

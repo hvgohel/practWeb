@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
-    <mapping map-id="student-1" wildcard="false">
-        <class-a>com.dw.practWeb.model.Student</class-a>
-        <class-b>com.dw.practWeb.model.Student</class-b>
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping map-id="student-1" wildcard="false">
+		<class-a>com.dw.practWeb.model.Student</class-a>
+		<class-b>com.dw.practWeb.model.Student</class-b>
 
-        <field>
-            <a>name</a>
-            <b>name</b>
-        </field>
+		<field>
+			<a>name</a>
+			<b>name</b>
+		</field>
 
-        <field>
-            <a>city</a>
-            <b>city</b>
-        </field>
-    </mapping>
-    
-    <mapping map-id="student-2" wildcard="false">
-        <class-a>com.dw.practWeb.model.Student</class-a>
-        <class-b>com.dw.practWeb.model.Student</class-b>
+		<field>
+			<a>city</a>
+			<b>city</b>
+		</field>
+	</mapping>
 
-        <field>
-            <a>name</a>
-            <b>name</b>
-        </field>
+	<mapping map-id="student-2" wildcard="false">
+		<class-a>com.dw.practWeb.model.Student</class-a>
+		<class-b>com.dw.practWeb.model.Student</class-b>
 
-        <field>
-            <a>city</a>
-            <b>city</b>
-        </field>
-        
-        <field>
-            <a>dateOfBirth</a>
-            <b>dateOfBirth</b>
-        </field>
-    </mapping>
+		<field>
+			<a>name</a>
+			<b>name</b>
+		</field>
+
+		<field>
+			<a>city</a>
+			<b>city</b>
+		</field>
+
+		<field>
+			<a>dateOfBirth</a>
+			<b>dateOfBirth</b>
+		</field>
+	</mapping>
 </mappings>
